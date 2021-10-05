@@ -10,7 +10,7 @@ const sleep = (ms) =>
   })
 
 export const todoActions = {
-  async fetchTodos({ setStatus, setMessage, setTodos }) {
+  async fetchTodos({ setStatus, setTodos, setMessage }) {
     setStatus('loading')
 
     try {
@@ -56,13 +56,14 @@ export const todoActions = {
 
       for (const todo of newTodos) {
         if (!existingTodos.find((_todo) => _todo.id === todo.id)) {
-          await axios.post(todo)
+          await axios.post('/', todo)
         }
       }
+      console.log('ok')
 
       setMessage({ type: 'success', text: 'Todos saved' })
     } catch (err) {
-      console.error(err.toJSON())
+      console.error(err)
       setMessage({
         type: 'error',
         text: 'Something went wrong'
