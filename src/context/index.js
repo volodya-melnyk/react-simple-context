@@ -1,4 +1,5 @@
 import createSimpleContext, { unpackModule } from '../npm'
+import { todos } from '../todos.js'
 
 import * as setters from './setters'
 import * as getters from './getters'
@@ -6,7 +7,7 @@ import * as actions from './actions'
 
 const store = {
   state: {
-    todos: [],
+    todos,
     status: 'idle',
     filter: 'all',
     message: {}
