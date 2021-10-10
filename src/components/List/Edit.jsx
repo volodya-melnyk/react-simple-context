@@ -1,11 +1,19 @@
-import { useState } from 'react'
-import { useSimpleContext } from '../../context'
+import { useState, useEffect, useRef } from 'react'
+import { useSimpleContext } from 'context'
 
 export default function Edit({ todo }) {
+  const inputRef = useRef()
   const { setters } = useSimpleContext()
 
   const { id, text, edit } = todo
   const [newText, setNewText] = useState(text)
+
+  useEffect(() => {
+    if (inputRef.current && edit) {
+      inputRef.current.focus()
+      inputRef.current.select()
+    }
+  }, [edit])
 
   const changeText = ({ target: { value } }) => {
     const trimmed = value.replace(/\s{2,}/g, ' ').trim()
@@ -24,6 +32,7 @@ export default function Edit({ todo }) {
   return (
     <li className='list-group-item d-flex align-items-center'>
       <input
+        ref={inputRef}
         type='text'
         value={newText}
         onChange={changeText}
